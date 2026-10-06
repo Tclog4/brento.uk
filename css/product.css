@@ -577,62 +577,174 @@
 
 
 /* =========================================
+   SELECT WRAPPER
+========================================= */
+
+.config-select-wrap {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   CUSTOM DROPDOWN ARROW
+========================================= */
+
+.config-select-wrap::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    right: 16px;
+
+    width: 9px;
+    height: 9px;
+
+    border-right:
+        2px solid
+        var(--purple-light);
+
+    border-bottom:
+        2px solid
+        var(--purple-light);
+
+    pointer-events: none;
+
+    transform:
+        translateY(-65%)
+        rotate(45deg);
+
+    transition:
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+
+/* =========================================
    SELECTS
 ========================================= */
 
 .product-option {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
     width: 100%;
 
-    min-height: 48px;
+    min-height: 52px;
 
     padding:
-        0 42px 0 14px;
+        0 48px 0 16px;
 
     border:
-        1px solid var(--border);
+        1px solid
+        rgba(167, 139, 250, 0.28);
 
-    border-radius: 11px;
+    border-radius: 13px;
 
     outline: none;
 
     background:
-        #12121a;
+        linear-gradient(
+            145deg,
+            #181621,
+            #101016
+        );
 
     color: #ffffff;
 
-    font-size: 0.82rem;
-    font-weight: 650;
+    font-family: inherit;
+
+    font-size: 0.86rem;
+    font-weight: 700;
+
+    line-height: 1.2;
 
     cursor: pointer;
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.025);
 
     transition:
         border-color var(--transition),
         background var(--transition),
-        box-shadow var(--transition);
+        box-shadow var(--transition),
+        transform var(--transition);
 }
 
 .product-option:hover {
     border-color:
-        var(--border-hover);
+        rgba(167, 139, 250, 0.62);
 
     background:
-        #161620;
+        linear-gradient(
+            145deg,
+            #211b2c,
+            #14131b
+        );
+
+    box-shadow:
+        0 0 0 1px
+        rgba(139, 92, 246, 0.08),
+        0 8px 25px
+        rgba(0, 0, 0, 0.18);
 }
 
 .product-option:focus {
     border-color:
         var(--purple-light);
 
+    background:
+        #191522;
+
     box-shadow:
         0 0 0 3px
-        rgba(139, 92, 246, 0.13);
+        rgba(139, 92, 246, 0.16),
+        0 8px 30px
+        rgba(0, 0, 0, 0.2);
+}
+
+.product-option:active {
+    transform:
+        translateY(1px);
 }
 
 .product-option option {
     background:
         #111118;
 
-    color: #ffffff;
+    color:
+        #ffffff;
+
+    font-weight:
+        650;
+}
+
+
+/* =========================================
+   SELECT WRAPPER FOCUS STATE
+========================================= */
+
+.config-select-wrap:focus-within::after {
+    border-color:
+        #ffffff;
+
+    transform:
+        translateY(-35%)
+        rotate(225deg);
+}
+
+
+/* =========================================
+   OPTION PRICE VISIBILITY
+========================================= */
+
+.product-option option[value]:checked {
+    color:
+        #ffffff;
 }
 
 
@@ -699,6 +811,56 @@
     font-size: 0.7rem;
 
     line-height: 1.5;
+}
+
+
+/* =========================================
+   ENQUIRY MESSAGE
+========================================= */
+
+.product-enquiry-message {
+    margin-top: 14px;
+
+    padding:
+        14px 16px;
+
+    border:
+        1px solid
+        rgba(139, 92, 246, 0.28);
+
+    border-radius: 12px;
+
+    background:
+        rgba(139, 92, 246, 0.07);
+
+    color:
+        var(--text-soft);
+
+    font-size: 0.8rem;
+
+    line-height: 1.55;
+
+    animation:
+        productMessageIn
+        0.25s ease both;
+}
+
+@keyframes productMessageIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
 }
 
 
@@ -1064,6 +1226,26 @@
     }
 
 
+    .product-option {
+        min-height: 56px;
+
+        padding:
+            0 50px 0 16px;
+
+        font-size: 0.9rem;
+
+        border-radius: 14px;
+    }
+
+
+    .config-select-wrap::after {
+        right: 18px;
+
+        width: 10px;
+        height: 10px;
+    }
+
+
     .full-specs-section,
     .game-performance-section {
         padding:
@@ -1129,6 +1311,18 @@
         font-size: 1.55rem;
     }
 
+
+    .product-option {
+        min-height: 58px;
+
+        font-size: 0.88rem;
+    }
+
+
+    .config-select-wrap::after {
+        right: 17px;
+    }
+
 }
 
 
@@ -1142,8 +1336,11 @@
     .product-card,
     .game-card,
     .full-spec,
-    .product-performance > div {
+    .product-performance > div,
+    .product-enquiry-message {
         transition: none;
+
+        animation: none;
     }
 
 }
