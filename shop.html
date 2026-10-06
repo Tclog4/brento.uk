@@ -185,7 +185,10 @@
              SHOP HERO STATS
         ================================== -->
 
-        <div class="shop-hero-stats">
+        <div
+            class="shop-hero-stats"
+            aria-label="Brento benefits"
+        >
 
 
             <div>
@@ -353,16 +356,39 @@
 
 
         <!-- =================================
-             FILTER BAR
+             SEARCH + FILTERS
         ================================== -->
 
-        <div
-            class="shop-toolbar"
-            aria-label="PC filters"
-        >
+        <div class="shop-toolbar">
 
 
-            <div class="shop-filter-bar">
+            <div class="shop-search-wrap">
+
+                <label
+                    for="shop-search"
+                    class="visually-hidden"
+                >
+                    Search gaming PCs
+                </label>
+
+
+                <input
+                    type="search"
+                    id="shop-search"
+                    class="shop-search"
+                    placeholder="Search PCs..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+            </div>
+
+
+
+            <div
+                class="shop-filter-bar"
+                aria-label="PC performance filters"
+            >
 
 
                 <button
@@ -525,7 +551,9 @@
         <div class="performance-grid">
 
 
-            <!-- 1080P -->
+            <!-- =================================
+                 1080P
+            ================================== -->
 
             <article class="performance-card">
 
@@ -585,7 +613,9 @@
 
 
 
-            <!-- 1440P -->
+            <!-- =================================
+                 1440P
+            ================================== -->
 
             <article
                 class="
@@ -650,7 +680,9 @@
 
 
 
-            <!-- HIGH PERFORMANCE -->
+            <!-- =================================
+                 HIGH PERFORMANCE
+            ================================== -->
 
             <article class="performance-card">
 
@@ -761,7 +793,10 @@
 
 
 
-            <div class="shop-help-specs">
+            <div
+                class="shop-help-specs"
+                aria-label="PC specification explanations"
+            >
 
 
                 <div class="shop-help-spec">
@@ -891,22 +926,26 @@
     <div class="container">
 
 
-        <div class="section-heading centered">
+        <div class="shop-process-header">
 
-            <p class="eyebrow">
-                THE BRENTO APPROACH
-            </p>
+            <div class="section-heading">
 
-
-            <h2>
-                Simple PC buying.
-            </h2>
+                <p class="eyebrow">
+                    THE BRENTO APPROACH
+                </p>
 
 
-            <p>
-                No need to understand every piece
-                of hardware before choosing a PC.
-            </p>
+                <h2>
+                    Simple PC buying.
+                </h2>
+
+
+                <p>
+                    No need to understand every piece
+                    of hardware before choosing a PC.
+                </p>
+
+            </div>
 
         </div>
 
@@ -917,13 +956,15 @@
 
             <article class="shop-process-card">
 
-                <span>
+                <div class="shop-process-number">
                     01
-                </span>
+                </div>
+
 
                 <h3>
                     Pick your games
                 </h3>
+
 
                 <p>
                     Tell us what you actually want
@@ -935,13 +976,15 @@
 
             <article class="shop-process-card">
 
-                <span>
+                <div class="shop-process-number">
                     02
-                </span>
+                </div>
+
 
                 <h3>
                     Pick your resolution
                 </h3>
+
 
                 <p>
                     1080P and 1440P can need very
@@ -953,13 +996,15 @@
 
             <article class="shop-process-card">
 
-                <span>
+                <div class="shop-process-number">
                     03
-                </span>
+                </div>
+
 
                 <h3>
                     Choose your PC
                 </h3>
+
 
                 <p>
                     Compare the systems that actually
