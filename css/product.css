@@ -1,0 +1,1149 @@
+/* =========================================
+   BRENTO — PRODUCT PAGE
+   Individual Gaming PC Product Styling
+========================================= */
+
+
+/* =========================================
+   BREADCRUMB
+========================================= */
+
+.product-breadcrumb {
+    padding: 24px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(255, 255, 255, 0.012);
+}
+
+.product-breadcrumb .container {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--text-muted);
+
+    font-size: 0.82rem;
+}
+
+.product-breadcrumb a {
+    color: var(--purple-light);
+
+    font-weight: 750;
+
+    transition:
+        color var(--transition),
+        transform var(--transition);
+}
+
+.product-breadcrumb a:hover {
+    color: #ffffff;
+
+    transform:
+        translateX(2px);
+}
+
+.product-breadcrumb strong {
+    color: var(--text-soft);
+
+    font-weight: 650;
+}
+
+
+/* =========================================
+   PRODUCT PAGE
+========================================= */
+
+.product-page {
+    position: relative;
+
+    padding: 90px 0 110px;
+
+    overflow: hidden;
+}
+
+.product-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+    height: 700px;
+
+    top: -300px;
+    left: -250px;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.12),
+            transparent 68%
+        );
+}
+
+.product-page-grid {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(0, 0.95fr);
+
+    gap: 75px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   PRODUCT GALLERY
+========================================= */
+
+.product-gallery {
+    position: sticky;
+
+    top: 105px;
+}
+
+.product-main-image {
+    position: relative;
+
+    min-height: 600px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(167, 139, 250, 0.24);
+
+    border-radius: 28px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.17),
+            transparent 58%
+        ),
+        linear-gradient(
+            145deg,
+            #17131f,
+            #0b0b10
+        );
+
+    box-shadow:
+        0 30px 100px
+        rgba(0, 0, 0, 0.45),
+        0 0 70px
+        rgba(139, 92, 246, 0.08);
+}
+
+.product-main-image::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.22),
+            transparent 68%
+        );
+
+    filter: blur(12px);
+}
+
+.product-main-image::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.035),
+            transparent 30%,
+            transparent 70%,
+            rgba(139, 92, 246, 0.035)
+        );
+}
+
+
+/* =========================================
+   PRODUCT PLACEHOLDER
+========================================= */
+
+.product-large-placeholder {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(310px, 65%);
+    height: 450px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(167, 139, 250, 0.42);
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #211a2b,
+            #111018 45%,
+            #07070b
+        );
+
+    box-shadow:
+        0 35px 100px
+        rgba(0, 0, 0, 0.6),
+        0 0 70px
+        rgba(139, 92, 246, 0.18),
+        inset 0 0 60px
+        rgba(139, 92, 246, 0.06);
+
+    transform:
+        perspective(1000px)
+        rotateY(-6deg);
+
+    transition:
+        transform var(--transition-slow),
+        border-color var(--transition-slow),
+        box-shadow var(--transition-slow);
+}
+
+.product-large-placeholder:hover {
+    border-color:
+        rgba(167, 139, 250, 0.62);
+
+    box-shadow:
+        0 40px 110px
+        rgba(0, 0, 0, 0.65),
+        0 0 90px
+        rgba(139, 92, 246, 0.24);
+
+    transform:
+        perspective(1000px)
+        rotateY(0deg)
+        translateY(-5px);
+}
+
+.product-large-placeholder::before {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background:
+        var(--purple-light);
+
+    box-shadow:
+        0 0 15px var(--purple),
+        0 0 40px var(--purple),
+        0 0 90px var(--purple);
+
+    animation:
+        productLight 2.2s ease-in-out infinite;
+}
+
+.product-large-placeholder::after {
+    content: "";
+
+    position: absolute;
+
+    top: 22px;
+    left: 20px;
+    right: 20px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(167, 139, 250, 0.55),
+            transparent
+        );
+}
+
+@keyframes productLight {
+
+    0%,
+    100% {
+        opacity: 0.65;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+
+.product-large-placeholder > div {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 38px;
+
+    text-align: center;
+}
+
+.product-large-placeholder strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 1.8rem;
+
+    letter-spacing: 0.14em;
+}
+
+.product-large-placeholder span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 0.22em;
+}
+
+
+/* =========================================
+   PRODUCT IMAGE NOTE
+========================================= */
+
+.product-image-note {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+    padding: 15px 17px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.product-image-note > span {
+    flex:
+        0 0 auto;
+
+    color: var(--success);
+
+    font-weight: 900;
+}
+
+.product-image-note p {
+    font-size: 0.76rem;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================
+   PRODUCT DETAILS
+========================================= */
+
+.product-details {
+    position: relative;
+
+    padding-top: 8px;
+}
+
+.product-details h1 {
+    max-width: 650px;
+
+    font-size:
+        clamp(
+            3rem,
+            5vw,
+            5rem
+        );
+}
+
+.product-lead {
+    max-width: 560px;
+
+    margin-top: 22px;
+
+    font-size: 1.05rem;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.product-price-large {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 10px;
+
+    margin-top: 30px;
+}
+
+.product-price-large span {
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+.product-price-large strong {
+    color: #ffffff;
+
+    font-size: 2.6rem;
+
+    line-height: 1;
+
+    letter-spacing: -0.05em;
+}
+
+
+/* =========================================
+   PERFORMANCE SUMMARY
+========================================= */
+
+.product-performance {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 30px;
+}
+
+.product-performance > div {
+    padding:
+        18px 15px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition);
+}
+
+.product-performance > div:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--border-hover);
+
+    background:
+        rgba(139, 92, 246, 0.055);
+}
+
+.product-performance strong {
+    display: block;
+
+    color: var(--purple-light);
+
+    font-size: 0.95rem;
+}
+
+.product-performance span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 0.68rem;
+
+    line-height: 1.35;
+}
+
+
+/* =========================================
+   CONFIGURATOR
+========================================= */
+
+.product-config {
+    margin-top: 38px;
+
+    padding-top: 32px;
+
+    border-top:
+        1px solid var(--border);
+}
+
+.product-config h2 {
+    margin-bottom: 22px;
+
+    font-size: 1.45rem;
+
+    letter-spacing: -0.03em;
+}
+
+.config-option {
+    display: grid;
+
+    grid-template-columns:
+        150px minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding:
+        17px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.055);
+}
+
+.config-option:last-child {
+    border-bottom: 0;
+}
+
+.config-option > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.config-option strong {
+    font-size: 0.9rem;
+}
+
+
+/* =========================================
+   SELECTS
+========================================= */
+
+.product-option {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        0 42px 0 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background:
+        #12121a;
+
+    color: #ffffff;
+
+    font-size: 0.82rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.product-option:hover {
+    border-color:
+        var(--border-hover);
+
+    background:
+        #161620;
+}
+
+.product-option:focus {
+    border-color:
+        var(--purple-light);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(139, 92, 246, 0.13);
+}
+
+.product-option option {
+    background:
+        #111118;
+
+    color: #ffffff;
+}
+
+
+/* =========================================
+   TOTAL
+========================================= */
+
+.product-total {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 26px;
+
+    padding:
+        20px 0;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.product-total span {
+    color: var(--text-soft);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.product-total strong {
+    color: #ffffff;
+
+    font-size: 1.8rem;
+
+    letter-spacing: -0.04em;
+
+    transition:
+        color var(--transition);
+}
+
+
+/* =========================================
+   BUY / ENQUIRE BUTTON
+========================================= */
+
+.product-buy-button {
+    width: 100%;
+
+    margin-top: 20px;
+}
+
+.product-buy-note {
+    margin-top: 12px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FULL SPECIFICATIONS
+========================================= */
+
+.full-specs-section {
+    padding:
+        110px 0;
+
+    border-top:
+        1px solid var(--border);
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--bg-soft),
+            #08080c
+        );
+}
+
+.full-specs-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 45px;
+}
+
+.full-spec {
+    min-height: 120px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding:
+        24px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.full-spec:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--border-hover);
+
+    background:
+        rgba(139, 92, 246, 0.045);
+}
+
+.full-spec span {
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+    font-weight: 850;
+
+    letter-spacing: 0.14em;
+}
+
+.full-spec strong {
+    margin-top: 7px;
+
+    font-size: 1rem;
+}
+
+
+/* =========================================
+   GAME PERFORMANCE
+========================================= */
+
+.game-performance-section {
+    padding:
+        110px 0;
+}
+
+.game-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 45px;
+}
+
+.game-card {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 160px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding:
+        24px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.game-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    right: -55px;
+    bottom: -60px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.17),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+.game-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--border-hover);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(139, 92, 246, 0.07),
+            rgba(255, 255, 255, 0.015)
+        );
+}
+
+.game-card strong {
+    font-size: 1rem;
+}
+
+.game-card span {
+    margin-top: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+}
+
+.game-card b {
+    margin-top: 18px;
+
+    color: var(--purple-light);
+
+    font-size: 1.15rem;
+}
+
+
+/* =========================================
+   PRODUCT PAGE CTA
+========================================= */
+
+.product-page + .full-specs-section + .game-performance-section + .cta-section {
+    padding-top: 110px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .product-page-grid {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 35px;
+    }
+
+    .product-main-image {
+        min-height: 500px;
+    }
+
+    .product-large-placeholder {
+        width: 260px;
+        height: 390px;
+    }
+
+    .full-specs-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .game-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+
+    .product-breadcrumb {
+        padding:
+            18px 0;
+    }
+
+    .product-breadcrumb .container {
+        overflow: hidden;
+
+        white-space: nowrap;
+    }
+
+    .product-breadcrumb strong {
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    .product-page {
+        padding:
+            55px 0 75px;
+    }
+
+
+    .product-page-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+
+    .product-gallery {
+        position: relative;
+
+        top: auto;
+    }
+
+
+    .product-main-image {
+        min-height: 480px;
+
+        border-radius: 22px;
+    }
+
+
+    .product-large-placeholder {
+        width: 230px;
+        height: 350px;
+
+        transform: none;
+    }
+
+
+    .product-large-placeholder:hover {
+        transform:
+            translateY(-4px);
+    }
+
+
+    .product-details {
+        padding-top: 0;
+    }
+
+
+    .product-details h1 {
+        font-size:
+            clamp(
+                2.8rem,
+                13vw,
+                4.2rem
+            );
+    }
+
+
+    .product-lead {
+        font-size: 0.98rem;
+    }
+
+
+    .product-price-large strong {
+        font-size: 2.35rem;
+    }
+
+
+    .product-performance {
+        grid-template-columns:
+            1fr;
+
+        gap: 8px;
+    }
+
+
+    .product-performance > div {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+
+    .product-performance span {
+        margin-top: 0;
+
+        text-align: right;
+    }
+
+
+    .config-option {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+
+    .full-specs-section,
+    .game-performance-section {
+        padding:
+            80px 0;
+    }
+
+
+    .full-specs-grid {
+        grid-template-columns: 1fr;
+
+        margin-top: 35px;
+    }
+
+
+    .full-spec {
+        min-height: 105px;
+    }
+
+
+    .game-grid {
+        grid-template-columns: 1fr;
+
+        margin-top: 35px;
+    }
+
+
+    .game-card {
+        min-height: 135px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 430px) {
+
+    .product-main-image {
+        min-height: 410px;
+    }
+
+
+    .product-large-placeholder {
+        width: 205px;
+        height: 315px;
+    }
+
+
+    .product-image-note {
+        padding:
+            13px 14px;
+    }
+
+
+    .product-price-large {
+        margin-top: 24px;
+    }
+
+
+    .product-total strong {
+        font-size: 1.55rem;
+    }
+
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .product-large-placeholder,
+    .product-card,
+    .game-card,
+    .full-spec,
+    .product-performance > div {
+        transition: none;
+    }
+
+}
