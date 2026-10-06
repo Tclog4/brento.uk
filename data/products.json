@@ -1,0 +1,96 @@
+[
+    {
+        "id": "brento-starter",
+        "name": "Brento Starter",
+        "category": "1080p",
+        "price": 399,
+        "condition": "Used + tested",
+        "stock": "In stock",
+        "featured": false,
+
+        "cpu": "Intel Core i5",
+        "gpu": "Gaming GPU",
+        "ram": "16GB",
+        "storage": "1TB NVMe SSD",
+
+        "performance": {
+            "target": "1080p",
+            "quality": "High",
+            "fps": "60+ FPS"
+        },
+
+        "description": "A budget-focused gaming PC for getting into PC gaming without wasting money.",
+
+        "image": "",
+
+        "tags": [
+            "budget",
+            "1080p",
+            "starter"
+        ]
+    },
+
+
+    {
+        "id": "brento-performance",
+        "name": "Brento Performance",
+        "category": "1080p-1440p",
+        "price": 599,
+        "condition": "Used + tested",
+        "stock": "In stock",
+        "featured": true,
+
+        "cpu": "Intel Core i5",
+        "gpu": "Performance GPU",
+        "ram": "16GB",
+        "storage": "1TB NVMe SSD",
+
+        "performance": {
+            "target": "1080p / 1440p",
+            "quality": "High / Ultra",
+            "fps": "60–144+ FPS"
+        },
+
+        "description": "A stronger all-round gaming system designed for higher settings and higher frame rates.",
+
+        "image": "",
+
+        "tags": [
+            "popular",
+            "performance",
+            "1440p"
+        ]
+    },
+
+
+    {
+        "id": "brento-elite",
+        "name": "Brento Elite",
+        "category": "high-performance",
+        "price": 799,
+        "condition": "Used + tested",
+        "stock": "In stock",
+        "featured": false,
+
+        "cpu": "High-performance CPU",
+        "gpu": "High-end GPU",
+        "ram": "32GB",
+        "storage": "2TB NVMe SSD",
+
+        "performance": {
+            "target": "1440p",
+            "quality": "Ultra",
+            "fps": "100+ FPS"
+        },
+
+        "description": "Built for demanding games, higher settings and people who want more performance.",
+
+        "image": "",
+
+        "tags": [
+            "high-end",
+            "1440p",
+            "elite"
+        ]
+    }
+]
