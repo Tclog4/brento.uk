@@ -1,6 +1,6 @@
 [
     {
-        "id": "brento-starter",
+        "id": "pc-1",
         "name": "Brento Starter",
         "category": "1080p",
         "price": 399,
@@ -30,9 +30,8 @@
         ]
     },
 
-
     {
-        "id": "brento-performance",
+        "id": "pc-2",
         "name": "Brento Performance",
         "category": "1080p-1440p",
         "price": 599,
@@ -62,9 +61,8 @@
         ]
     },
 
-
     {
-        "id": "brento-elite",
+        "id": "pc-3",
         "name": "Brento Elite",
         "category": "high-performance",
         "price": 799,
