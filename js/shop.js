@@ -1,77 +1,333 @@
 /* =========================================
    BRENTO — SHOP SYSTEM
+   Product data + filtering
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const productGrid =
+        document.querySelector(".product-grid");
+
     const filterButtons =
         document.querySelectorAll(".shop-filter");
-
-    const productCards =
-        document.querySelectorAll(".shop-product-card");
 
     const productCount =
         document.querySelector(".shop-product-count");
 
 
-    /* =========================================
-       STOP IF THIS IS NOT THE SHOP PAGE
-    ========================================= */
+    /*
+        Stop if this is not the shop page.
+    */
 
-    if (
-        !filterButtons.length ||
-        !productCards.length
-    ) {
+    if (!productGrid) {
         return;
     }
 
 
     /* =========================================
-       FILTER PRODUCTS
+       LOAD PRODUCT DATA
     ========================================= */
 
-    function filterProducts(selectedFilter) {
+    async function loadProducts() {
 
-        let visibleCount = 0;
+        try {
 
-
-        productCards.forEach((card) => {
-
-            const categories =
-                (
-                    card.dataset.category || ""
-                )
-                .toLowerCase()
-                .split(",")
-                .map((category) => category.trim());
+            const response =
+                await fetch("data/products.json");
 
 
-            const shouldShow =
-                selectedFilter === "all" ||
-                categories.includes(
-                    selectedFilter
+            if (!response.ok) {
+                throw new Error(
+                    "Could not load product data."
                 );
-
-
-            card.hidden = !shouldShow;
-
-
-            if (shouldShow) {
-                visibleCount++;
             }
 
-        });
+
+            const products =
+                await response.json();
+
+
+            renderProducts(products);
+
+            setupFilters(products);
+
+        } catch (error) {
+
+            console.error(
+                "Brento shop error:",
+                error
+            );
+
+
+            productGrid.innerHTML = `
+                <div class="shop-error">
+                    <h3>
+                        We couldn't load the PCs.
+                    </h3>
+
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =========================================
+       RENDER PRODUCTS
+    ========================================= */
+
+    function renderProducts(products) {
+
+        productGrid.innerHTML =
+            products.map(
+                createProductCard
+            ).join("");
 
 
         updateProductCount(
-            visibleCount
+            products.length
         );
 
     }
 
 
     /* =========================================
-       UPDATE PRODUCT COUNT
+       CREATE PRODUCT CARD
+    ========================================= */
+
+    function createProductCard(product) {
+
+        const featuredBadge =
+            product.featured
+                ? `
+                    <span class="product-featured-badge">
+                        Popular
+                    </span>
+                `
+                : "";
+
+
+        const image =
+            product.image
+                ? `
+                    <img
+                        src="${escapeHTML(product.image)}"
+                        alt="${escapeHTML(product.name)}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="product-placeholder">
+                        BRENTO
+                    </div>
+                `;
+
+
+        const tags =
+            product.tags
+                .map(
+                    (tag) => `
+                        <span>
+                            ${escapeHTML(tag)}
+                        </span>
+                    `
+                )
+                .join("");
+
+
+        return `
+            <article
+                class="product-card ${product.featured ? "featured-product" : ""}"
+                data-category="${escapeHTML(product.category)}"
+            >
+
+                <div class="product-image">
+
+                    <span class="stock-badge">
+                        ${escapeHTML(product.stock)}
+                    </span>
+
+                    ${featuredBadge}
+
+                    ${image}
+
+                </div>
+
+
+                <div class="product-info">
+
+                    <p class="product-category">
+                        ${escapeHTML(
+                            product.performance.target
+                        )}
+                    </p>
+
+
+                    <h3>
+                        ${escapeHTML(product.name)}
+                    </h3>
+
+
+                    <p class="product-description">
+                        ${escapeHTML(product.description)}
+                    </p>
+
+
+                    <div class="spec-list">
+
+                        <span>
+                            ${escapeHTML(product.ram)}
+                        </span>
+
+                        <span>
+                            ${escapeHTML(product.storage)}
+                        </span>
+
+                        <span>
+                            ${escapeHTML(product.gpu)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="product-bottom">
+
+                        <div>
+
+                            <span class="price-label">
+                                From
+                            </span>
+
+                            <strong class="product-price">
+                                £${Number(
+                                    product.price
+                                ).toLocaleString("en-GB")}
+                            </strong>
+
+                        </div>
+
+
+                        <a
+                            href="products/${escapeHTML(product.id)}.html"
+                            class="small-button"
+                        >
+                            View PC
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+        `;
+
+    }
+
+
+    /* =========================================
+       FILTER SYSTEM
+    ========================================= */
+
+    function setupFilters(products) {
+
+        if (!filterButtons.length) {
+            return;
+        }
+
+
+        filterButtons.forEach((button) => {
+
+            button.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const filter =
+                        (
+                            button.dataset.filter ||
+                            "all"
+                        ).toLowerCase();
+
+
+                    filterButtons.forEach(
+                        (filterButton) => {
+
+                            const active =
+                                filterButton === button;
+
+
+                            filterButton.classList.toggle(
+                                "active",
+                                active
+                            );
+
+
+                            filterButton.setAttribute(
+                                "aria-pressed",
+                                String(active)
+                            );
+
+                        }
+                    );
+
+
+                    const filteredProducts =
+                        filter === "all"
+                            ? products
+                            : products.filter(
+                                (product) =>
+                                    product.tags
+                                        .map(
+                                            (tag) =>
+                                                tag.toLowerCase()
+                                        )
+                                        .includes(filter)
+                            );
+
+
+                    renderProducts(
+                        filteredProducts
+                    );
+
+                }
+            );
+
+        });
+
+
+        const allButton =
+            document.querySelector(
+                ".shop-filter[data-filter='all']"
+            );
+
+
+        if (allButton) {
+
+            allButton.classList.add(
+                "active"
+            );
+
+            allButton.setAttribute(
+                "aria-pressed",
+                "true"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       PRODUCT COUNT
     ========================================= */
 
     function updateProductCount(count) {
@@ -90,95 +346,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       UPDATE ACTIVE FILTER
+       HTML ESCAPING
     ========================================= */
 
-    function setActiveFilter(activeButton) {
+    function escapeHTML(value) {
 
-        filterButtons.forEach(
-            (button) => {
-
-                const isActive =
-                    button === activeButton;
-
-
-                button.classList.toggle(
-                    "active",
-                    isActive
-                );
-
-
-                button.setAttribute(
-                    "aria-pressed",
-                    String(isActive)
-                );
-
-            }
-        );
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
 
     }
 
 
     /* =========================================
-       FILTER BUTTON EVENTS
+       START SHOP
     ========================================= */
 
-    filterButtons.forEach((button) => {
-
-        button.setAttribute(
-            "aria-pressed",
-            "false"
-        );
-
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const selectedFilter =
-                    (
-                        button.dataset.filter ||
-                        "all"
-                    ).toLowerCase();
-
-
-                setActiveFilter(
-                    button
-                );
-
-
-                filterProducts(
-                    selectedFilter
-                );
-
-            }
-        );
-
-    });
-
-
-    /* =========================================
-       INITIAL STATE
-    ========================================= */
-
-    const allButton =
-        document.querySelector(
-            ".shop-filter[data-filter='all']"
-        );
-
-
-    if (allButton) {
-
-        setActiveFilter(
-            allButton
-        );
-
-        filterProducts("all");
-
-    } else {
-
-        filterProducts("all");
-
-    }
+    loadProducts();
 
 });
