@@ -1,9 +1,13 @@
 /* =========================================
    BRENTO — SHOP SYSTEM
-   Product data + filtering
+   Product data + filtering + rendering
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
 
     const productGrid =
         document.querySelector(".product-grid");
@@ -25,20 +29,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
+       SHOP STATE
+    ========================================= */
+
+    const shopState = {
+
+        products: [],
+
+        activeFilter: "all",
+
+        searchTerm: ""
+
+    };
+
+
+    /* =========================================
        LOAD PRODUCT DATA
     ========================================= */
 
     async function loadProducts() {
 
+        showLoading();
+
+
         try {
 
             const response =
-                await fetch("data/products.json");
+                await fetch(
+                    "data/products.json",
+                    {
+                        cache: "no-cache"
+                    }
+                );
 
 
             if (!response.ok) {
                 throw new Error(
-                    "Could not load product data."
+                    `Product data returned ${response.status}.`
                 );
             }
 
@@ -47,9 +74,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
 
-            renderProducts(products);
+            if (!Array.isArray(products)) {
+                throw new Error(
+                    "Product data is not an array."
+                );
+            }
 
-            setupFilters(products);
+
+            shopState.products =
+                products.filter(
+                    isValidProduct
+                );
+
+
+            renderProducts();
+
+
+            setupFilters();
+
 
         } catch (error) {
 
@@ -59,19 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-            productGrid.innerHTML = `
-                <div class="shop-error">
-                    <h3>
-                        We couldn't load the PCs.
-                    </h3>
-
-                    <p>
-                        Please refresh the page and try again.
-                    </p>
-                </div>
-            `;
+            showError();
 
         }
+
+    }
+
+
+    /* =========================================
+       PRODUCT VALIDATION
+    ========================================= */
+
+    function isValidProduct(product) {
+
+        if (!product || typeof product !== "object") {
+            return false;
+        }
+
+
+        if (!product.id || !product.name) {
+            return false;
+        }
+
+
+        return true;
 
     }
 
@@ -80,17 +133,126 @@ document.addEventListener("DOMContentLoaded", () => {
        RENDER PRODUCTS
     ========================================= */
 
-    function renderProducts(products) {
+    function renderProducts() {
+
+        const visibleProducts =
+            getVisibleProducts();
+
+
+        if (!visibleProducts.length) {
+
+            showEmptyState();
+
+            updateProductCount(0);
+
+            return;
+
+        }
+
 
         productGrid.innerHTML =
-            products.map(
-                createProductCard
-            ).join("");
+            visibleProducts
+                .map(createProductCard)
+                .join("");
 
 
         updateProductCount(
-            products.length
+            visibleProducts.length
         );
+
+    }
+
+
+    /* =========================================
+       GET VISIBLE PRODUCTS
+    ========================================= */
+
+    function getVisibleProducts() {
+
+        let products =
+            [...shopState.products];
+
+
+        /* -----------------------------------------
+           FILTER
+        ----------------------------------------- */
+
+        if (
+            shopState.activeFilter !==
+            "all"
+        ) {
+
+            products =
+                products.filter(
+                    (product) =>
+                        getProductTags(
+                            product
+                        ).includes(
+                            shopState.activeFilter
+                        )
+                );
+
+        }
+
+
+        /* -----------------------------------------
+           SEARCH
+        ----------------------------------------- */
+
+        if (shopState.searchTerm) {
+
+            const search =
+                shopState.searchTerm
+                    .toLowerCase()
+                    .trim();
+
+
+            products =
+                products.filter(
+                    (product) =>
+                        getSearchText(
+                            product
+                        ).includes(search)
+                );
+
+        }
+
+
+        return products;
+
+    }
+
+
+    /* =========================================
+       SEARCH TEXT
+    ========================================= */
+
+    function getSearchText(product) {
+
+        return [
+
+            product.name,
+
+            product.description,
+
+            product.category,
+
+            product.cpu,
+
+            product.gpu,
+
+            product.ram,
+
+            product.storage,
+
+            product.condition,
+
+            ...getProductTags(product)
+
+        ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
 
     }
 
@@ -104,7 +266,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const featuredBadge =
             product.featured
                 ? `
-                    <span class="product-featured-badge">
+                    <span
+                        class="product-featured-badge"
+                    >
                         Popular
                     </span>
                 `
@@ -112,43 +276,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const image =
-            product.image
-                ? `
-                    <img
-                        src="${escapeHTML(product.image)}"
-                        alt="${escapeHTML(product.name)}"
-                        loading="lazy"
-                    >
-                `
-                : `
-                    <div class="product-placeholder">
-                        BRENTO
-                    </div>
-                `;
+            createProductImage(
+                product
+            );
 
 
-        const tags =
-            product.tags
-                .map(
-                    (tag) => `
-                        <span>
-                            ${escapeHTML(tag)}
-                        </span>
-                    `
-                )
-                .join("");
+        const stock =
+            getStockLabel(
+                product.stock
+            );
+
+
+        const performanceTarget =
+            product.performance?.target ||
+            product.category ||
+            "Gaming PC";
+
+
+        const description =
+            product.description ||
+            "A gaming PC built with performance and value in mind.";
+
+
+        const ram =
+            product.ram ||
+            "RAM information unavailable";
+
+
+        const storage =
+            product.storage ||
+            "Storage information unavailable";
+
+
+        const gpu =
+            product.gpu ||
+            "GPU information unavailable";
+
+
+        const price =
+            formatPrice(
+                product.price
+            );
+
+
+        const productLink =
+            createProductLink(
+                product.id
+            );
 
 
         return `
             <article
                 class="product-card ${product.featured ? "featured-product" : ""}"
-                data-category="${escapeHTML(product.category)}"
+                data-product-id="${escapeHTML(product.id)}"
+                data-category="${escapeHTML(
+                    product.category || ""
+                )}"
             >
 
                 <div class="product-image">
 
-                    <span class="stock-badge">
-                        ${escapeHTML(product.stock)}
+                    <span
+                        class="stock-badge"
+                        data-stock="${escapeHTML(stock.className)}"
+                    >
+                        ${escapeHTML(stock.label)}
                     </span>
 
                     ${featuredBadge}
@@ -162,33 +354,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <p class="product-category">
                         ${escapeHTML(
-                            product.performance.target
+                            performanceTarget
                         )}
                     </p>
 
 
                     <h3>
-                        ${escapeHTML(product.name)}
+                        ${escapeHTML(
+                            product.name
+                        )}
                     </h3>
 
 
                     <p class="product-description">
-                        ${escapeHTML(product.description)}
+                        ${escapeHTML(
+                            description
+                        )}
                     </p>
 
 
-                    <div class="spec-list">
+                    <div
+                        class="spec-list"
+                        aria-label="Key specifications"
+                    >
 
                         <span>
-                            ${escapeHTML(product.ram)}
+                            ${escapeHTML(ram)}
                         </span>
 
                         <span>
-                            ${escapeHTML(product.storage)}
+                            ${escapeHTML(storage)}
                         </span>
 
                         <span>
-                            ${escapeHTML(product.gpu)}
+                            ${escapeHTML(gpu)}
                         </span>
 
                     </div>
@@ -203,17 +402,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             </span>
 
                             <strong class="product-price">
-                                £${Number(
-                                    product.price
-                                ).toLocaleString("en-GB")}
+                                ${price}
                             </strong>
 
                         </div>
 
 
                         <a
-                            href="products/${escapeHTML(product.id)}.html"
+                            href="${productLink}"
                             class="small-button"
+                            aria-label="View ${escapeHTML(
+                                product.name
+                            )}"
                         >
                             View PC
                         </a>
@@ -229,96 +429,428 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
+       PRODUCT IMAGE
+    ========================================= */
+
+    function createProductImage(product) {
+
+        if (!product.image) {
+
+            return `
+                <div
+                    class="product-placeholder"
+                    aria-hidden="true"
+                >
+                    BRENTO
+                </div>
+            `;
+
+        }
+
+
+        return `
+            <img
+                src="${escapeHTML(
+                    product.image
+                )}"
+                alt="${escapeHTML(
+                    product.name
+                )}"
+                loading="lazy"
+                decoding="async"
+            >
+        `;
+
+    }
+
+
+    /* =========================================
+       PRODUCT LINK
+    ========================================= */
+
+    function createProductLink(id) {
+
+        const safeId =
+            String(id || "")
+                .trim()
+                .replace(
+                    /[^a-zA-Z0-9_-]/g,
+                    ""
+                );
+
+
+        if (!safeId) {
+            return "#";
+        }
+
+
+        return `products/${safeId}.html`;
+
+    }
+
+
+    /* =========================================
+       STOCK LABEL
+    ========================================= */
+
+    function getStockLabel(stock) {
+
+        const value =
+            String(
+                stock || "Availability unknown"
+            )
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            value.includes("out") ||
+            value.includes("sold")
+        ) {
+
+            return {
+                label: "Out of stock",
+                className: "out-of-stock"
+            };
+
+        }
+
+
+        if (
+            value.includes("low") ||
+            value.includes("few")
+        ) {
+
+            return {
+                label: "Low stock",
+                className: "low-stock"
+            };
+
+        }
+
+
+        if (
+            value.includes("pre") ||
+            value.includes("soon")
+        ) {
+
+            return {
+                label: stock,
+                className: "coming-soon"
+            };
+
+        }
+
+
+        return {
+            label: stock || "Availability unknown",
+            className: "in-stock"
+        };
+
+    }
+
+
+    /* =========================================
+       PRODUCT TAGS
+    ========================================= */
+
+    function getProductTags(product) {
+
+        if (!Array.isArray(product.tags)) {
+            return [];
+        }
+
+
+        return product.tags
+            .map(
+                (tag) =>
+                    String(tag)
+                        .trim()
+                        .toLowerCase()
+            )
+            .filter(Boolean);
+
+    }
+
+
+    /* =========================================
        FILTER SYSTEM
     ========================================= */
 
-    function setupFilters(products) {
+    function setupFilters() {
 
         if (!filterButtons.length) {
             return;
         }
 
 
-        filterButtons.forEach((button) => {
+        filterButtons.forEach(
+            (button) => {
 
-            button.setAttribute(
-                "aria-pressed",
-                "false"
+                button.setAttribute(
+                    "aria-pressed",
+                    "false"
+                );
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const filter =
+                            (
+                                button.dataset.filter ||
+                                "all"
+                            )
+                                .trim()
+                                .toLowerCase();
+
+
+                        setActiveFilter(
+                            filter
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        setActiveFilter(
+            "all"
+        );
+
+    }
+
+
+    /* =========================================
+       SET ACTIVE FILTER
+    ========================================= */
+
+    function setActiveFilter(filter) {
+
+        shopState.activeFilter =
+            filter;
+
+
+        filterButtons.forEach(
+            (button) => {
+
+                const buttonFilter =
+                    (
+                        button.dataset.filter ||
+                        "all"
+                    )
+                        .trim()
+                        .toLowerCase();
+
+
+                const active =
+                    buttonFilter === filter;
+
+
+                button.classList.toggle(
+                    "active",
+                    active
+                );
+
+
+                button.setAttribute(
+                    "aria-pressed",
+                    String(active)
+                );
+
+            }
+        );
+
+
+        renderProducts();
+
+    }
+
+
+    /* =========================================
+       SEARCH SUPPORT
+       Automatically activates if a future
+       search input is added to shop.html.
+    ========================================= */
+
+    const searchInput =
+        document.querySelector(
+            ".shop-search"
+        );
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            () => {
+
+                shopState.searchTerm =
+                    searchInput.value;
+
+
+                renderProducts();
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       LOADING STATE
+    ========================================= */
+
+    function showLoading() {
+
+        productGrid.innerHTML = `
+            <div
+                class="shop-loading"
+                role="status"
+                aria-live="polite"
+            >
+
+                <span
+                    class="shop-loading-spinner"
+                    aria-hidden="true"
+                ></span>
+
+                <p>
+                    Loading Brento PCs...
+                </p>
+
+            </div>
+        `;
+
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
+
+    function showEmptyState() {
+
+        productGrid.innerHTML = `
+            <div
+                class="shop-empty"
+                role="status"
+            >
+
+                <div
+                    class="shop-empty-icon"
+                    aria-hidden="true"
+                >
+                    ?
+                </div>
+
+                <h3>
+                    No PCs found
+                </h3>
+
+                <p>
+                    Try another category or search.
+                </p>
+
+                <button
+                    type="button"
+                    class="button button-secondary shop-reset-button"
+                >
+                    Show all PCs
+                </button>
+
+            </div>
+        `;
+
+
+        const resetButton =
+            productGrid.querySelector(
+                ".shop-reset-button"
             );
 
 
-            button.addEventListener(
+        if (resetButton) {
+
+            resetButton.addEventListener(
                 "click",
                 () => {
 
-                    const filter =
-                        (
-                            button.dataset.filter ||
-                            "all"
-                        ).toLowerCase();
+                    if (searchInput) {
+                        searchInput.value = "";
+                    }
 
 
-                    filterButtons.forEach(
-                        (filterButton) => {
-
-                            const active =
-                                filterButton === button;
+                    shopState.searchTerm =
+                        "";
 
 
-                            filterButton.classList.toggle(
-                                "active",
-                                active
-                            );
-
-
-                            filterButton.setAttribute(
-                                "aria-pressed",
-                                String(active)
-                            );
-
-                        }
-                    );
-
-
-                    const filteredProducts =
-                        filter === "all"
-                            ? products
-                            : products.filter(
-                                (product) =>
-                                    product.tags
-                                        .map(
-                                            (tag) =>
-                                                tag.toLowerCase()
-                                        )
-                                        .includes(filter)
-                            );
-
-
-                    renderProducts(
-                        filteredProducts
+                    setActiveFilter(
+                        "all"
                     );
 
                 }
             );
 
-        });
+        }
+
+    }
 
 
-        const allButton =
-            document.querySelector(
-                ".shop-filter[data-filter='all']"
+    /* =========================================
+       ERROR STATE
+    ========================================= */
+
+    function showError() {
+
+        updateProductCount(0);
+
+
+        productGrid.innerHTML = `
+            <div
+                class="shop-error"
+                role="alert"
+            >
+
+                <div
+                    class="shop-error-icon"
+                    aria-hidden="true"
+                >
+                    !
+                </div>
+
+                <h3>
+                    We couldn't load the PCs.
+                </h3>
+
+                <p>
+                    There was a problem loading the Brento product catalogue.
+                </p>
+
+                <button
+                    type="button"
+                    class="button button-primary shop-retry-button"
+                >
+                    Try again
+                </button>
+
+            </div>
+        `;
+
+
+        const retryButton =
+            productGrid.querySelector(
+                ".shop-retry-button"
             );
 
 
-        if (allButton) {
+        if (retryButton) {
 
-            allButton.classList.add(
-                "active"
-            );
-
-            allButton.setAttribute(
-                "aria-pressed",
-                "true"
+            retryButton.addEventListener(
+                "click",
+                loadProducts
             );
 
         }
@@ -338,9 +870,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         productCount.textContent =
-            count === 1
-                ? "1 PC"
-                : `${count} PCs`;
+            count === 0
+                ? "No PCs"
+                : count === 1
+                    ? "1 PC"
+                    : `${count} PCs`;
+
+    }
+
+
+    /* =========================================
+       PRICE FORMATTING
+    ========================================= */
+
+    function formatPrice(price) {
+
+        const numericPrice =
+            Number(price);
+
+
+        if (
+            !Number.isFinite(
+                numericPrice
+            )
+        ) {
+
+            return "Price unavailable";
+
+        }
+
+
+        return `£${numericPrice.toLocaleString(
+            "en-GB",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }
+        )}`;
 
     }
 
@@ -352,11 +918,26 @@ document.addEventListener("DOMContentLoaded", () => {
     function escapeHTML(value) {
 
         return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
+            .replaceAll(
+                "&",
+                "&amp;"
+            )
+            .replaceAll(
+                "<",
+                "&lt;"
+            )
+            .replaceAll(
+                ">",
+                "&gt;"
+            )
+            .replaceAll(
+                '"',
+                "&quot;"
+            )
+            .replaceAll(
+                "'",
+                "&#039;"
+            );
 
     }
 
