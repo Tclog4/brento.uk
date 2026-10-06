@@ -1,0 +1,749 @@
+/* =========================================
+   BRENTO — SHOP PAGE STYLES
+========================================= */
+
+
+/* =========================================
+   SHOP HERO
+========================================= */
+
+.shop-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 110px 0 70px;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(139, 92, 246, 0.16),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 15% 50%,
+            rgba(139, 92, 246, 0.07),
+            transparent 30%
+        );
+}
+
+
+.shop-hero-content {
+    max-width: 760px;
+}
+
+
+.shop-hero h1 {
+    margin: 0;
+    font-size: clamp(
+        3.5rem,
+        8vw,
+        6.5rem
+    );
+    font-weight: 900;
+    letter-spacing: -0.065em;
+    line-height: 0.95;
+}
+
+
+.shop-hero h1 span {
+    color: #a78bfa;
+}
+
+
+.shop-hero-content > p:not(.eyebrow) {
+    max-width: 600px;
+    margin: 28px 0 30px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+
+.shop-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+.shop-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 900px;
+    margin-top: 70px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+.shop-hero-stats > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 82px;
+    padding: 15px 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+.shop-hero-stats > div:first-child {
+    padding-left: 0;
+}
+
+
+.shop-hero-stats > div:last-child {
+    border-right: 0;
+}
+
+
+.shop-hero-stats strong {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 8px;
+    color: #c4b5fd;
+    background: rgba(139, 92, 246, 0.08);
+    font-size: 0.72rem;
+}
+
+
+.shop-hero-stats span {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.72rem;
+}
+
+
+/* =========================================
+   SHOP INTRO
+========================================= */
+
+.shop-intro {
+    padding: 75px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.015);
+}
+
+
+.shop-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 80px;
+    align-items: end;
+}
+
+
+.shop-intro h2 {
+    max-width: 650px;
+    margin: 0;
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.5rem
+    );
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+}
+
+
+.shop-intro h2 span {
+    color: #a78bfa;
+}
+
+
+.shop-intro-grid > p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.52);
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   SHOP SECTION
+========================================= */
+
+.shop-section {
+    padding: 105px 0;
+}
+
+
+.shop-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+
+.shop-heading h2 {
+    margin: 0;
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.2rem
+    );
+    letter-spacing: -0.04em;
+}
+
+
+.shop-heading p:not(.eyebrow) {
+    margin: 10px 0 0;
+    color: rgba(255, 255, 255, 0.48);
+}
+
+
+.shop-product-count {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   SHOP TOOLBAR
+========================================= */
+
+.shop-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+
+.shop-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+
+.shop-filter {
+    min-height: 38px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.48);
+    background: transparent;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.shop-filter:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+.shop-filter.active {
+    border-color: rgba(139, 92, 246, 0.28);
+    color: #ffffff;
+    background: rgba(139, 92, 246, 0.14);
+}
+
+
+.shop-sort-info {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.68rem;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   SHOP PRODUCT GRID
+========================================= */
+
+.shop-product-grid {
+    min-height: 250px;
+}
+
+
+.shop-product-grid .product-card {
+    min-width: 0;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.shop-loading {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+
+.shop-loading-spinner {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-top-color: #a78bfa;
+    border-radius: 50%;
+    animation: shopSpinner 0.8s linear infinite;
+}
+
+
+@keyframes shopSpinner {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================
+   SHOP ERROR
+========================================= */
+
+.shop-error {
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 16px;
+    background: rgba(239, 68, 68, 0.04);
+    text-align: center;
+}
+
+
+.shop-error h3 {
+    margin: 0 0 8px;
+}
+
+
+.shop-error p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* =========================================
+   VALUE NOTE
+========================================= */
+
+.shop-value-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 45px;
+    padding: 24px;
+    border: 1px solid rgba(139, 92, 246, 0.14);
+    border-radius: 14px;
+    background: rgba(139, 92, 246, 0.04);
+}
+
+
+.shop-value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    color: #c4b5fd;
+    background: rgba(139, 92, 246, 0.12);
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+
+.shop-value-note strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+}
+
+
+.shop-value-note p {
+    max-width: 700px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.78rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================
+   PERFORMANCE GUIDE
+========================================= */
+
+.performance-guide {
+    padding: 105px 0;
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(139, 92, 246, 0.06),
+            transparent 45%
+        ),
+        rgba(255, 255, 255, 0.012);
+}
+
+
+.performance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+
+.performance-card {
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.performance-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.25);
+}
+
+
+.performance-card-featured {
+    border-color: rgba(139, 92, 246, 0.25);
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(139, 92, 246, 0.12),
+            transparent 50%
+        ),
+        rgba(255, 255, 255, 0.025);
+}
+
+
+.performance-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 45px;
+}
+
+
+.performance-number {
+    color: rgba(167, 139, 250, 0.7);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+
+.performance-label {
+    padding: 5px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+
+.performance-card h3 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+}
+
+
+.performance-card > p {
+    min-height: 78px;
+    margin: 0 0 25px;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
+
+.performance-example {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.performance-example span {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.6rem;
+    font-weight: 800;
+}
+
+
+.performance-example strong {
+    font-size: 0.78rem;
+}
+
+
+/* =========================================
+   SHOP HELP
+========================================= */
+
+.shop-help {
+    padding: 105px 0;
+}
+
+
+.shop-help-box {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    align-items: center;
+    gap: 70px;
+    padding: 55px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    background:
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(139, 92, 246, 0.1),
+            transparent 45%
+        ),
+        rgba(255, 255, 255, 0.025);
+}
+
+
+.shop-help-content h2 {
+    max-width: 600px;
+    margin: 0 0 20px;
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.3rem
+    );
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+}
+
+
+.shop-help-content > p:not(.eyebrow) {
+    max-width: 560px;
+    margin: 0 0 22px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.7;
+}
+
+
+.shop-help-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+
+.shop-help-spec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 58px;
+    padding: 10px 12px 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+
+.shop-help-spec strong {
+    font-size: 0.78rem;
+}
+
+
+/* =========================================
+   RESPONSIVE — TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
+    .shop-hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .shop-hero-stats > div:nth-child(2) {
+        border-right: 0;
+    }
+
+
+    .shop-hero-stats > div:nth-child(1),
+    .shop-hero-stats > div:nth-child(2) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+
+    .shop-hero-stats > div:nth-child(3) {
+        padding-left: 0;
+    }
+
+
+    .shop-intro-grid,
+    .shop-help-box {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .performance-card > p {
+        min-height: auto;
+    }
+
+}
+
+
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .shop-hero {
+        padding: 75px 0 55px;
+    }
+
+
+    .shop-hero h1 {
+        font-size: clamp(
+            3rem,
+            15vw,
+            4.8rem
+        );
+    }
+
+
+    .shop-hero-actions {
+        flex-direction: column;
+    }
+
+
+    .shop-hero-actions .button {
+        width: 100%;
+    }
+
+
+    .shop-hero-stats {
+        margin-top: 50px;
+    }
+
+
+    .shop-hero-stats > div {
+        min-height: 75px;
+        padding: 12px;
+    }
+
+
+    .shop-hero-stats > div:first-child,
+    .shop-hero-stats > div:nth-child(3) {
+        padding-left: 0;
+    }
+
+
+    .shop-intro,
+    .shop-section,
+    .performance-guide,
+    .shop-help {
+        padding: 75px 0;
+    }
+
+
+    .shop-heading {
+        display: block;
+    }
+
+
+    .shop-product-count {
+        margin-top: 12px;
+    }
+
+
+    .shop-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .shop-sort-info {
+        white-space: normal;
+    }
+
+
+    .shop-filter {
+        flex: 1;
+    }
+
+
+    .shop-filter-bar {
+        width: 100%;
+    }
+
+
+    .shop-filter {
+        min-width: calc(50% - 5px);
+    }
+
+
+    .shop-value-note {
+        padding: 18px;
+    }
+
+
+    .shop-help-box {
+        padding: 30px 22px;
+        border-radius: 16px;
+    }
+
+
+    .shop-help-specs {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .shop-loading-spinner {
+        animation: none;
+    }
+
+
+    .performance-card {
+        transition: none;
+    }
+
+}
